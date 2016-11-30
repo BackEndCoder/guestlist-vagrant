@@ -80,7 +80,7 @@ Vagrant.configure("2") do |config|
   #config.vm.provision :shell, path: "bootstrap_nonroot.sh", privileged: false
   #config.vm.network :forwarded_port, guest: 80, host: 4567
   config.vm.network "public_network"
-  #config.vm.synced_folder ".", "/vagrant", disabled: true
-  config.vm.provision "file", source: "nginx.conf", destination: "/etc/nginx/sites-available/guestlist"
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+  #config.vm.provision "file", source: "nginx.conf", destination: "/etc/nginx/sites-available/guestlist"
   config.vm.synced_folder ENV['HOST_WEB_DIR'], "/development", create:true, :owner => "vagrant", :group => "www-data", :mount_options => ["dmode=775","fmode=664"]
 end
