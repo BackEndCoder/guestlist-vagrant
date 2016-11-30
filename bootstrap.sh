@@ -21,12 +21,12 @@ fi
 #sed -i 's/Listen 80/Listen 0.0.0.0:80/' /etc/apache2/ports.conf
 
 apt-get install -y git htop zip unzip jq
-sudo debconf-set-selections <<< 'mysql-server-5.6 mysql-server/root_password password password'
-sudo debconf-set-selections <<< 'mysql-server-5.6 mysql-server/root_password_again password password'
-apt-get install -y mysql-server-5.6 mysql-client-5.6
+sudo debconf-set-selections <<< 'mysql-server-5.5 mysql-server/root_password password password'
+sudo debconf-set-selections <<< 'mysql-server-5.5 mysql-server/root_password_again password password'
+apt-get install -y mysql-server-5.5 mysql-client-5.5
 
 # Add MySQL user and initial database
-mysql -uroot -ppassword -e "CREATE USER 'guestlist'@'%' IDENTIFIED BY 'guestlist';"
+mysql -uroot -ppassword -e "CREATE USER 'guestlist'@'%' IDENTIFIED BY 'password';"
 mysql -uroot -ppassword -e "CREATE DATABASE guestlist;"
 mysql -uroot -ppassword -e "GRANT ALL PRIVILEGES ON guestlist.* TO 'guestlist'@'%';"
 mysql -uroot -ppassword -e "FLUSH PRIVILEGES;"
@@ -35,7 +35,7 @@ apt-get -y install nginx
 
 systemctl start nginx.service
 
-apt-get -y install curl php5-fpm php5-cli php5-curl php5-mcypt
+apt-get -y install curl php5-fpm php5-cli php5-curl php5-mcrypt php5-mysql
 
 
 # Install composer
@@ -51,4 +51,3 @@ sudo python2.7 get-pip.py
 sudo pip install awscli
 
 #
-sudo service apache2 restart
