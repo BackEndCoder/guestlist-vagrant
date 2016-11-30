@@ -2,7 +2,6 @@
 
 Requires VirutialBox
 Requires Vagrant
-```
 
 ```bash
 $ vagrant plugin install vagrant-vbguest
