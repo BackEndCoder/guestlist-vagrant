@@ -50,7 +50,7 @@ sudo pip install awscli
 
 #
 rm /etc/nginx/sites-enabled/default
-cp /vagrant/nginx.conf /etc/nginx/sites-available/default
-ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+rm /etc/nginx/sites-available/default
+ln -s /etc/nginx/sites-available/guestlist /etc/nginx/sites-enabled/guestlist
 
 systemctl start nginx.service
