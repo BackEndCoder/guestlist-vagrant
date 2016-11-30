@@ -33,8 +33,6 @@ mysql -uroot -ppassword -e "FLUSH PRIVILEGES;"
 
 apt-get -y install nginx
 
-systemctl start nginx.service
-
 apt-get -y install curl php5-fpm php5-cli php5-curl php5-mcrypt php5-mysql
 
 
@@ -51,3 +49,8 @@ sudo python2.7 get-pip.py
 sudo pip install awscli
 
 #
+rm /etc/nginx/sites-enabled/default
+cp /vagrant/nginx.conf /etc/nginx/sites-available/default
+ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+
+systemctl start nginx.service
