@@ -74,7 +74,7 @@ Vagrant.configure("2") do |config|
   # SHELL
   #config.ssh.username = 'vagrant'
   #config.ssh.password = 'vagrant'
-  config.ssh.insert_key = 'false'
+  config.ssh.insert_key = false
   #config.ssh.forward_agent = 'true'
   #config.ssh.private_key_path = ['~/.vagrant.d/insecure_private_key', '~/.ssh/id_dsa']
   config.vm.provision :shell, path: "bootstrap.sh"
