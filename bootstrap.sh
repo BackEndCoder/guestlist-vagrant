@@ -45,8 +45,13 @@ mv composer.phar /usr/local/bin/composer
 # Install Pip and AWS CLI
 cd /tmp
 curl -O https://bootstrap.pypa.io/get-pip.py
-sudo python2.7 get-pip.py
-sudo pip install awscli
+python2.7 get-pip.py
+pip install awscli
 
+
+rm /etc/nginx/sites-enabled/default
+rm /etc/nginx/sites-available/default
+mv /home/vagrant/nginx.conf /etc/nginx/sites-available/guestlist
+ln -s /etc/nginx/sites-available/guestlist /etc/nginx/sites-enabled/guestlist
 #
-systemctl start nginx.service
+systemctl restart nginx.service

@@ -47,7 +47,7 @@ Vagrant.configure("2") do |config|
   #
    config.vm.provider "virtualbox" do |vb|
   #   # Display the VirtualBox GUI when booting the machine
-     vb.gui = true
+  #   vb.gui = true
   #
   #   # Customize the amount of memory on the VM:
   #   vb.memory = "1024"
@@ -75,13 +75,14 @@ Vagrant.configure("2") do |config|
   #config.ssh.username = 'vagrant'
   #config.ssh.password = 'vagrant'
   config.ssh.insert_key = false
+
   #config.ssh.forward_agent = 'true'
   #config.ssh.private_key_path = ['~/.vagrant.d/insecure_private_key', '~/.ssh/id_dsa']
-  config.vm.provision :shell, path: "bootstrap.sh"
   #config.vm.provision :shell, path: "bootstrap_nonroot.sh", privileged: false
   #config.vm.network :forwarded_port, guest: 80, host: 4567
   config.vm.network "public_network"
   config.vm.synced_folder ".", "/vagrant", disabled: true
-  #config.vm.provision "file", source: "~/Boxes/guestlist/nginx.conf", destination: "/etc/nginx/sites-available/guestlist"
   config.vm.synced_folder ENV['HOST_WEB_DIR'], "/development", create:true, :owner => "vagrant", :group => "www-data", :mount_options => ["dmode=775","fmode=664"]
+  config.vm.provision "file", source: "~/Boxes/guestlist/nginx.conf", destination: "~/nginx.conf"
+  config.vm.provision :shell, path: "bootstrap.sh"
 end
