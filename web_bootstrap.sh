@@ -41,3 +41,15 @@ ln -s /etc/nginx/sites-available/guestlist /etc/nginx/sites-enabled/guestlist
 #
 systemctl restart nginx.service
 
+apt-get -y install php5-memcache memcached
+
+#sed -i 's/Listen 80/Listen 0.0.0.0:80/' /etc/apache2/ports.conf
+sed -i "s/-l 127.0.0.1/-l $1/" /etc/memcached.conf
+sed -i "s/session.save_handler = files/session.save_handler = memcache/" /etc/php5/fpm/php.ini
+sed -i "s/;session.save_path = \"\/var\/lib\/php5\/sessions\"/session.save_path = \"tcp:\/\/10.5.7.10:11211,tcp:\/\/10.5.7.11:11211\"/" /etc/php5/fpm/php.ini
+
+echo "memcache.allow_failover=1" >> /etc/php5/mods-available/memcache.ini
+echo "memcache.session_redundancy=3" >> /etc/php5/mods-available/memcache.ini
+
+service memcached restart
+service php5-fpm restart
