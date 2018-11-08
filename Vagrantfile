@@ -24,9 +24,9 @@ Vagrant.configure("2") do |config|
   end
 end
 
+i = 2
+
 config.vm.define "lb" do |node|
-  i += 1
-  node.env.enable
   node.vm.box = "debian/jessie64"
   node.vm.provider "virtualbox" do |vb|
     vb.gui = false
@@ -35,14 +35,13 @@ config.vm.define "lb" do |node|
   end
   node.ssh.insert_key = false
   node.vm.network "public_network"
-  node.vm.network "private_network", ip: "10.5.7.1#{i}"
+  node.vm.network "private_network", ip: "10.5.7.1#{i+1}"
   node.vm.synced_folder ".", "/vagrant", disabled: true
   node.vm.provision "file", source: "~/Boxes/guestlist/nginx.conf", destination: "~/nginx.conf"
   node.vm.provision :shell, path: "lb_bootstrap.sh"
 end
 
 config.vm.define "db" do |node|
-  i += 1
   node.env.enable
   node.vm.box = "debian/jessie64"
   node.vm.provider "virtualbox" do |vb|
@@ -51,7 +50,7 @@ config.vm.define "db" do |node|
     vb.cpus = "2"
   end
   node.ssh.insert_key = false
-  node.vm.network "private_network", ip: "10.5.7.1#{i}"
+  node.vm.network "private_network", ip: "10.5.7.1#{i+2}"
   node.vm.synced_folder ".", "/vagrant", disabled: true
   node.vm.provision :shell, path: "db_bootstrap.sh"
   end
